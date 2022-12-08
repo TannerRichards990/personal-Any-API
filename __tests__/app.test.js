@@ -4,6 +4,7 @@ const request = require('supertest');
 const app = require('../lib/app');
 
 const rlGame = require('../lib/models/rlModel');
+const rlRanks = require('../lib/models/rankModel');
 
 describe('backend-express-template routes', () => {
   beforeEach(() => {
@@ -35,7 +36,20 @@ describe('backend-express-template routes', () => {
     };
     expect(res.body).toEqual(expected);
   });
-  
+
+  it('/ranks should render a list of all players and their respective rank', async () => {
+    const res = await request(app).get('/ranks');
+    const allRanks = await rlRanks.getAllRanks();
+    const expected = allRanks.map((ranks) => {
+      return {
+        id: ranks.id,
+        player: ranks.player,
+        rank: ranks.rank,
+        hours: ranks.hours,
+      };
+    });
+    expect(res.body).toEqual(expected);
+  });
 
   
 

@@ -24,6 +24,19 @@ describe('backend-express-template routes', () => {
     expect(res.body).toEqual(expected);
   });
 
+  it('/rocketleague/:id should render a single rl player', async () => {
+    const res = await request(app).get('/rocketleague/1');
+    const singlePlayer = await rlGame.getPlayerById(1);
+    const expected = {
+      id: singlePlayer.id,
+      name: singlePlayer.name,
+      platform: singlePlayer.platform,
+      country: singlePlayer.country,
+    };
+    expect(res.body).toEqual(expected);
+  });
+  
+
   
 
 

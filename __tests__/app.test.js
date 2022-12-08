@@ -51,6 +51,18 @@ describe('backend-express-template routes', () => {
     expect(res.body).toEqual(expected);
   });
 
+  it('/ranks/:id should render a single player and their respective rank', async () => {
+    const res = await request(app).get('/ranks/1');
+    const singleRank = await rlRanks.getPlayerById(1);
+    const expected = {
+      id: singleRank.id,
+      player: singleRank.player,
+      rank: singleRank.rank,
+      hours: singleRank.hours,
+    };
+    expect(res.body).toEqual(expected);
+  });
+
   
 
 
